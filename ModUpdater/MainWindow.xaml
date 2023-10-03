@@ -8,11 +8,11 @@
         Title="MainWindow" Height="500" Width="1000">
     <Grid>
         <TextBox x:Name="folder_from" HorizontalAlignment="Left" Margin="12,98,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="371"/>
-        <TextBlock x:Name="folder_from_label" HorizontalAlignment="Left" Margin="13,79,0,0" TextWrapping="Wrap" Text="Folder with your mods" VerticalAlignment="Top"/>
+        <TextBlock x:Name="folder_from_label" HorizontalAlignment="Left" Margin="13,79,0,0" TextWrapping="Wrap" Text="Folder with your old mods" VerticalAlignment="Top"/>
         <TextBox x:Name="folder_to" HorizontalAlignment="Left" Margin="12,157,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="368"/>
-        <TextBlock x:Name="folder_to_label" HorizontalAlignment="Left" Margin="10,134,0,0" TextWrapping="Wrap" Text="Folder where you want mods" VerticalAlignment="Top"/>
+        <TextBlock x:Name="folder_to_label" HorizontalAlignment="Left" Margin="10,134,0,0" TextWrapping="Wrap" Text="The folder where you want to put the mods." VerticalAlignment="Top"/>
         <TextBox x:Name="version" HorizontalAlignment="Left" Margin="10,192,0,0" VerticalAlignment="Top" Width="66" Height="18"/>
-        <TextBlock x:Name="req_ver" HorizontalAlignment="Left" Margin="78,193,0,0" TextWrapping="Wrap" Text="Minecraft Version" VerticalAlignment="Top"/>
+        <TextBlock x:Name="req_ver" HorizontalAlignment="Left" Margin="78,193,0,0" TextWrapping="Wrap" Text="Required Minecraft Version" VerticalAlignment="Top"/>
         <Button x:Name="update_button" Content="Update Mods" HorizontalAlignment="Left" Margin="48,224,0,0" VerticalAlignment="Top" Width="86" Height="20" Click="update_button_Click"/>
         <TextBox x:Name="token"  HorizontalAlignment="Left" Margin="10,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="460"/>
         <ScrollViewer x:Name="scrollViewer" VerticalScrollBarVisibility="Auto" Margin="500,5,5,5" Width="400" >
@@ -26,7 +26,7 @@
         <Button x:Name="open_from_folder"  Content="Open" HorizontalAlignment="Left" Margin="435,156,0,0" VerticalAlignment="Top" Width="40" Height="20" Click="open_from_folder_Click" />
         <Button x:Name="open_to_folder" Content="Open" HorizontalAlignment="Left" Margin="435,97,0,0" VerticalAlignment="Top" Width="40" Height="20" Click="open_to_folder_Click"/>
         <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5,0,0,5" TextWrapping="Wrap">
-            Made by <Hyperlink NavigateUri="https://linktr.ee/magnariuk" RequestNavigate="Hyperlink_RequestNavigate">MagnarIUK</Hyperlink> | <Hyperlink NavigateUri="https://linktr.ee/magnariuk" RequestNavigate="Hyperlink_RequestNavigate">GitHub</Hyperlink>
+            Made by <Hyperlink NavigateUri="https://linktr.ee/magnariuk" RequestNavigate="Hyperlink_RequestNavigate">MagnarIUK</Hyperlink> | <Hyperlink NavigateUri="https://github.com/MagnarIUK/ModpackUpdater" RequestNavigate="Hyperlink_RequestNavigate">GitHub</Hyperlink> | RL-1.0.2
         </TextBlock>
 
 

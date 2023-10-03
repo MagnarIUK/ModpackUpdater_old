@@ -27,11 +27,20 @@ namespace ModUpdater
     /// </summary>
     public partial class MainWindow : Window
     {
+        public class DataContextModel
+        {
+            public string ProgramVersion { get; } = "RL-1.0.2";
+        }
+
+
+
+
         public MainWindow()
         {
+             
             Console.WriteLine("Ready");
             InitializeComponent();
-
+            this.DataContext = new DataContextModel();
             if (File.Exists(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "cache.json")))
             {
                 var task = Task.Run(() => LoadAndStoreTokenAsync());
@@ -202,11 +211,17 @@ namespace ModUpdater
             {
                 dialog.InitialDirectory = folder_to.Text;
             }
+            else
+            {
+                dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+            }
             CommonFileDialogResult result = dialog.ShowDialog();
             if (result == CommonFileDialogResult.Ok)
             {
                 folder_to.Text = dialog.FileName;
             }
+           
         }
 
         private void BrowseButton_Click2(object sender, RoutedEventArgs e)
@@ -216,6 +231,10 @@ namespace ModUpdater
             if(folder_from.Text.Length > 0 && Directory.Exists(folder_from.Text))
             {
                 dialog.InitialDirectory = folder_from.Text;
+            } else
+            {
+                dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
             }
             CommonFileDialogResult result = dialog.ShowDialog();
             if (result == CommonFileDialogResult.Ok)
