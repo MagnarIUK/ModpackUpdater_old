@@ -239,7 +239,7 @@ namespace ModUpdater
             CommonFileDialogResult result = dialog.ShowDialog();
             if (result == CommonFileDialogResult.Ok)
             {
-                folder_to.Text = dialog.FileName;
+                folder_from.Text = dialog.FileName;
             }
         }
 
