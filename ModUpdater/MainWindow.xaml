@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ModUpdater"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="1000">
+        Title="MainWindow" Height="350" Width="1000"
+        MinWidth="1000" MinHeight="350">
     <Grid>
         <TextBox x:Name="folder_from" HorizontalAlignment="Left" Margin="12,98,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="371"/>
         <TextBlock x:Name="folder_from_label" HorizontalAlignment="Left" Margin="13,79,0,0" TextWrapping="Wrap" Text="Folder with your old mods" VerticalAlignment="Top"/>
@@ -15,16 +16,21 @@
         <TextBlock x:Name="req_ver" HorizontalAlignment="Left" Margin="78,193,0,0" TextWrapping="Wrap" Text="Required Minecraft Version" VerticalAlignment="Top"/>
         <Button x:Name="update_button" Content="Update Mods" HorizontalAlignment="Left" Margin="48,224,0,0" VerticalAlignment="Top" Width="86" Height="20" Click="update_button_Click"/>
         <TextBox x:Name="token"  HorizontalAlignment="Left" Margin="10,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="460"/>
-        <ScrollViewer x:Name="scrollViewer" VerticalScrollBarVisibility="Auto" Margin="500,5,5,5" Width="400" >
+        <ScrollViewer x:Name="scrollViewer" 
+                      VerticalScrollBarVisibility="Auto" 
+                      HorizontalAlignment="Stretch" 
+                      VerticalAlignment="Stretch" 
+                      Margin="500,5,5,5">
             <Border BorderBrush="LightGray" BorderThickness="2" CornerRadius="25" Background="White">
-                <TextBlock x:Name="output" TextWrapping="Wrap" Width="400" Margin="20,0,0,0"/>
+                <TextBox x:Name="output" TextWrapping="Wrap" Width="Auto" Margin="20,0,0,0" IsReadOnly="True" Background="Transparent" BorderThickness="0"/>
             </Border>
         </ScrollViewer>
+
         <TextBlock x:Name="folder_from_label_Copy" HorizontalAlignment="Left" Margin="12,10,0,0" TextWrapping="Wrap" Text="Your Modrinth token" VerticalAlignment="Top"/>
         <Button Content="Browse" HorizontalAlignment="Left" VerticalAlignment="Top" Width="45" Margin="385,97,0,0" Click="BrowseButton_Click2"/>
         <Button Content="Browse" HorizontalAlignment="Left" VerticalAlignment="Top" Width="45" Margin="385,156,0,0" Click="BrowseButton_Click"/>
-        <Button x:Name="open_from_folder"  Content="Open" HorizontalAlignment="Left" Margin="435,156,0,0" VerticalAlignment="Top" Width="40" Height="20" Click="open_from_folder_Click" />
-        <Button x:Name="open_to_folder" Content="Open" HorizontalAlignment="Left" Margin="435,97,0,0" VerticalAlignment="Top" Width="40" Height="20" Click="open_to_folder_Click"/>
+        <Button x:Name="open_from_folder"  Content="Open" HorizontalAlignment="Left" Margin="435,97,0,0" VerticalAlignment="Top" Width="40" Height="20" Click="open_from_folder_Click" />
+        <Button x:Name="open_to_folder" Content="Open" HorizontalAlignment="Left" Margin="435,157,0,0" VerticalAlignment="Top" Width="40" Height="20" Click="open_to_folder_Click"/>
         <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5,0,0,5" TextWrapping="Wrap">
             Made by <Hyperlink NavigateUri="https://linktr.ee/magnariuk" RequestNavigate="Hyperlink_RequestNavigate">MagnarIUK</Hyperlink> | <Hyperlink NavigateUri="https://github.com/MagnarIUK/ModpackUpdater" RequestNavigate="Hyperlink_RequestNavigate">GitHub</Hyperlink> | RL-1.0.2
         </TextBlock>
