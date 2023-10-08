@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ModUpdater"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="1000"
-        MinWidth="1000" MinHeight="350">
+        Title="MainWindow" Height="450" Width="1000"
+        MinWidth="1000" MinHeight="450">
     <Grid>
         <TextBox x:Name="folder_from" HorizontalAlignment="Left" Margin="12,98,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="371"/>
         <TextBlock x:Name="folder_from_label" HorizontalAlignment="Left" Margin="13,79,0,0" TextWrapping="Wrap" Text="Folder with your old mods" VerticalAlignment="Top"/>
@@ -32,8 +32,9 @@
         <Button x:Name="open_from_folder"  Content="Open" HorizontalAlignment="Left" Margin="435,97,0,0" VerticalAlignment="Top" Width="40" Height="20" Click="open_from_folder_Click" />
         <Button x:Name="open_to_folder" Content="Open" HorizontalAlignment="Left" Margin="435,157,0,0" VerticalAlignment="Top" Width="40" Height="20" Click="open_to_folder_Click"/>
         <TextBlock HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="5,0,0,5" TextWrapping="Wrap">
-            Made by <Hyperlink NavigateUri="https://linktr.ee/magnariuk" RequestNavigate="Hyperlink_RequestNavigate">MagnarIUK</Hyperlink> | <Hyperlink NavigateUri="https://github.com/MagnarIUK/ModpackUpdater" RequestNavigate="Hyperlink_RequestNavigate">GitHub</Hyperlink> | RL-1.0.2
+            Made by <Hyperlink NavigateUri="https://linktr.ee/magnariuk" RequestNavigate="Hyperlink_RequestNavigate">MagnarIUK</Hyperlink> | <Hyperlink NavigateUri="https://github.com/MagnarIUK/ModpackUpdater" RequestNavigate="Hyperlink_RequestNavigate">GitHub</Hyperlink> | RL-1.1.0
         </TextBlock>
+        <CheckBox x:Name="is_modrinth_launcher" Content="Modrinth launcher mode" HorizontalAlignment="Left" Margin="11,56,0,0" VerticalAlignment="Top" Click="is_modrinth_launcher_Checked"/>
 
 
 

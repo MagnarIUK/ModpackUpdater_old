@@ -19,6 +19,7 @@ using System.Net.Http;
 using HtmlAgilityPack;
 using Newtonsoft.Json;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using System.Text.RegularExpressions;
 
 namespace ModUpdater
 {
@@ -49,6 +50,17 @@ namespace ModUpdater
                 folder_from.Text = task.Result["folder_from"];
                 folder_to.Text = task.Result["folder_to"];
                 version.Text = task.Result["version"];
+                is_modrinth_launcher.IsChecked = bool.Parse(task.Result["modrinth_mode"]);
+
+                if (is_modrinth_launcher.IsChecked == true)
+                {
+                    folder_from_label.Text = "Modrinth profile folder";
+                }
+                else if (is_modrinth_launcher.IsChecked == false)
+                {
+                    folder_from_label.Text = "Folder with your old mods";
+
+                }
             }
 
 
@@ -58,61 +70,137 @@ namespace ModUpdater
 
         private void update_button_Click(object sender, RoutedEventArgs e)
         {
-            string scriptExecutablePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "modpackupdater.exe");
-
-            if (version.Text.Length >1 )
+            Debug.WriteLine(is_modrinth_launcher.IsChecked.ToString());
+            if(is_modrinth_launcher.IsChecked == true)
             {
-                if (Directory.Exists(folder_from.Text) && Directory.Exists(folder_to.Text) )
+                string scriptExecutablePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "modrinthupdater.exe");
+
+                if (version.Text.Length > 1)
                 {
-                    Dictionary<string, string> data = new Dictionary<string, string>();
-                    data.Add("version", version.Text);
-                    data.Add("token", token.Text);
-                    data.Add("folder_from", folder_from.Text);
-                    data.Add("folder_to", folder_to.Text);
-
-                    Task task = WriteToFileAsync("cache.json", data);
-                    output.Text = "";
-                    var process = new Process
+                    if (Directory.Exists(folder_from.Text) && Directory.Exists(folder_to.Text))
                     {
-                        StartInfo = new ProcessStartInfo
+                        if (File.Exists(System.IO.Path.Combine(folder_from.Text, "profile.json"))){
+                            Dictionary<string, string> data = new Dictionary<string, string>();
+                            data.Add("version", version.Text);
+                            data.Add("token", token.Text);
+                            data.Add("folder_from", folder_from.Text);
+                            data.Add("folder_to", folder_to.Text);
+
+                            Task task = WriteToFileAsync("cache.json", data);
+                            output.Text = "";
+
+                            var process = new Process
+                            {
+                                StartInfo = new ProcessStartInfo
+                                {
+                                    FileName = scriptExecutablePath,
+                                    Arguments = $"\"{version.Text}\" \"{folder_from.Text}\" \"{folder_to.Text}\" \"{token.Text}\"",
+                                    RedirectStandardOutput = true,
+                                    StandardOutputEncoding = System.Text.Encoding.UTF8, 
+                                    UseShellExecute = false,
+                                    CreateNoWindow = true,
+                                },
+                                EnableRaisingEvents = true
+                            };
+
+                            process.OutputDataReceived += Process_OutputDataReceived;
+
+                            process.Exited += (sender2, e2) =>
+                            {
+                                Dispatcher.Invoke(() =>
+                                {
+                                    MessageBox.Show("Your mods have updated!", "Complete", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                                    Task t = WriteToFileAsync($"log {DateTime.Today.ToString()}", new Dictionary<string, string> { { "log", output.Text.ToString() } });
+                                });
+                            };
+
+                            process.Start();
+                            process.BeginOutputReadLine(); 
+
+                        }
+                        else
                         {
-                            FileName = scriptExecutablePath,
-                            Arguments = $"\"{version.Text}\" \"{folder_from.Text}\" \"{folder_to.Text}\" \"{token.Text}\"",
-                            RedirectStandardOutput = true,
-                            UseShellExecute = false,
-                            CreateNoWindow = true,
-                        },
-                        EnableRaisingEvents = true
-                    };
+                            MessageBox.Show("Could not find \"profile.json\" in Directory!\nMake sure you specify the Modrinth profile folder", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                        
 
-                    process.OutputDataReceived += Process_OutputDataReceived;
 
-                    process.Exited += (sender2, e2) =>
+
+                    }
+                    else
                     {
-                        Dispatcher.Invoke(() =>
-                        {
-                            MessageBox.Show("Your mods have updated!", "Complete", MessageBoxButton.OK, MessageBoxImage.Information);
-   
-                            Task t = WriteToFileAsync($"log {DateTime.Today.ToString()}", new Dictionary<string, string> { { "log", output.Text.ToString() } });
-                        });
-                    };
-
-                    process.Start();
-                    process.BeginOutputReadLine();
-
-
+                        MessageBox.Show("One of directories does not exist!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
 
                 }
                 else
                 {
-                    MessageBox.Show("One of directories does not exist!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                
-            } else
-            {
-                MessageBox.Show("Version number is too short", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Version number is too short", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 
+                }
             }
+            else if(is_modrinth_launcher.IsChecked == false)
+            {
+                string scriptExecutablePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "modpackupdater.exe");
+
+                if (version.Text.Length > 1)
+                {
+                    if (Directory.Exists(folder_from.Text) && Directory.Exists(folder_to.Text))
+                    {
+                        Dictionary<string, string> data = new Dictionary<string, string>();
+                        data.Add("version", version.Text);
+                        data.Add("token", token.Text);
+                        data.Add("folder_from", folder_from.Text);
+                        data.Add("folder_to", folder_to.Text);
+
+                        Task task = WriteToFileAsync("cache.json", data);
+                        output.Text = "";
+                        var process = new Process
+                        {
+                            StartInfo = new ProcessStartInfo
+                            {
+                                FileName = scriptExecutablePath,
+                                Arguments = $"\"{version.Text}\" \"{folder_from.Text}\" \"{folder_to.Text}\" \"{token.Text}\"",
+                                RedirectStandardOutput = true,
+                                StandardOutputEncoding = System.Text.Encoding.UTF8,   
+                                UseShellExecute = false,
+                                CreateNoWindow = true,
+                            },
+                            EnableRaisingEvents = true
+                        };
+
+                        process.OutputDataReceived += Process_OutputDataReceived;
+
+                        process.Exited += (sender2, e2) =>
+                        {
+                            Dispatcher.Invoke(() =>
+                            {
+                                MessageBox.Show("Your mods have updated!", "Complete", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                                Task t = WriteToFileAsync($"log {DateTime.Today.ToString()}", new Dictionary<string, string> { { "log", output.Text.ToString() } });
+                            });
+                        };
+
+                        process.Start();
+                        process.BeginOutputReadLine();
+
+
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("One of directories does not exist!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+
+                }
+                else
+                {
+                    MessageBox.Show("Version number is too short", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                }
+            }
+
 
 
         }
@@ -141,9 +229,11 @@ namespace ModUpdater
         {
             if (e.Data != null)
             {
+                string sanitizedData = Regex.Replace(e.Data, @"[^\u0020-\u007E]", " ");
+
                 Dispatcher.Invoke(() =>
                 {
-                    output.Text += e.Data + Environment.NewLine;
+                    output.Text += sanitizedData + Environment.NewLine;
 
                     if (scrollViewer.VerticalOffset == scrollViewer.ScrollableHeight)
                     {
@@ -152,6 +242,7 @@ namespace ModUpdater
                 });
             }
         }
+
 
 
 
@@ -243,5 +334,16 @@ namespace ModUpdater
             }
         }
 
+        private void is_modrinth_launcher_Checked(object sender, RoutedEventArgs e)
+        {
+            if(is_modrinth_launcher.IsChecked == true)
+            {
+                folder_from_label.Text = "Modrinth profile folder";
+            } else if(is_modrinth_launcher.IsChecked == false) 
+            {
+                folder_from_label.Text = "Folder with your old mods";
+
+            }
+        }
     }
 }
