@@ -85,6 +85,7 @@ namespace ModUpdater
                             data.Add("token", token.Text);
                             data.Add("folder_from", folder_from.Text);
                             data.Add("folder_to", folder_to.Text);
+                            data.Add("modrinth_mode", is_modrinth_launcher.IsChecked.ToString());
 
                             Task task = WriteToFileAsync("cache.json", data);
                             output.Text = "";
@@ -153,6 +154,7 @@ namespace ModUpdater
                         data.Add("token", token.Text);
                         data.Add("folder_from", folder_from.Text);
                         data.Add("folder_to", folder_to.Text);
+                        data.Add("modrinth_mode", is_modrinth_launcher.IsChecked.ToString());
 
                         Task task = WriteToFileAsync("cache.json", data);
                         output.Text = "";
