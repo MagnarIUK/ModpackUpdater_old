@@ -140,6 +140,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ModrinthDownloader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
